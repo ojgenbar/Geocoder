@@ -24,6 +24,7 @@ class GeocoderResult:
         return '<Class GeocoderResult(success=%s, lat=%s, long=%s, address="%s", kind="%s")>'% \
                (self.success, self.lat, self.long, addr, kind)
 
+
 class Geocoder:
     def __init__(self):
 
@@ -130,7 +131,6 @@ class Geocoder:
                 geocoded.message = '\n'.join(['Unknown failure with response.', data, url])
                 return geocoded
 
-
             if 'found' not in js2 or js2['found'] == '0':
                 message = '\n'.join(['==== Failure To Geocode ====', data, url])
                 geocoded.success = False
@@ -223,25 +223,12 @@ if __name__ == '__main__':
     en_geo.spn = (10, 4)
     en_geo.rspn = '1'
     res = en_geo.geocode(u"Жуковского ул. 7")
-    try:
-        if res.success:
-            print res.lat, res.long
-            print res.address.encode('utf-8')
-            print res.kind.encode('utf-8')
-            print res
+    if res.success:
+        print res.lat, res.long
+        print res.address.encode('utf-8')
+        print res.kind.encode('utf-8')
+        print res
 
-        else:
-            print res.message
-    except ZeroDivisionError:
-        for i in res:
-            print i.encode('utf-8')
+    else:
+        print res.message
     en_geo.saveCache()
-
-    # path = os.path.dirname(__file__)
-    # f = open(os.path.join(path, 'YAresponses'), 'rb')
-    # old_responses = pickle.load(f)
-    # f.close()
-    # print old_responses[old_responses.keys()[0]]
-    # en = Geocoder()
-    # en.saveCache()
-
